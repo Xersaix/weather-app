@@ -76,7 +76,7 @@ async function getWheater(lat,lon)
 async function get5DayWeather(lat,lon)
 {
     
-    let response = await fetch('api.openweathermap.org/data/2.5/forecast?lat=44.34&lon=10.99&appid=72696e39e9f46234f7f02c9d446c41c4&callback=test');
+    let response = await fetch('api.openweathermap.org/data/2.5/forecast?lat=44.34&lon=10.99&appid=72696e39e9f46234f7f02c9d446c41c4');
     const data = await response.json();
 
     console.log(data);
@@ -108,11 +108,11 @@ async function loadRightName(name){
 window.onload = function(){
     showDate()
     
-    // getWheater(defaultLat,defaultLon).then((result)=>{
-    //     loadRightName(result.name)
+    getWheater(defaultLat,defaultLon).then((result)=>{
+        loadRightName(result.name)
         
-    //     console.log(result)
-    // })
+        console.log(result)
+    })
 }
 
 searchBar.addEventListener("input",(event) =>{
