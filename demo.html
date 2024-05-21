@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="Permissions-Policy" content="interest-cohort=()">
     <link rel="stylesheet" href="style.css">
+    <script
+src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js">
+</script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <title>Document</title>
 </head>
@@ -29,12 +32,12 @@
 
        </div>
        <!-- Middle Part -->
-       <div class="flex flex-col w-7/12 sd:w-9/12 bg-slate-100">
+       <div class="flex flex-col w-7/12 sd:w-9/12 overflow-y-auto bg-slate-100">
         <!-- Top containing date and search bar -->
-        <div class="flex flex-row h-1/6 justify-between border-b-2">
+        <div class="flex flex-row h-72 justify-between border-b-2" style="height: 200px;">
 
             <!-- Date -->
-            <div class=" w-4/12 pl-10 flex flex-col justify-center space-y-2">
+            <div class=" w-4/12 pl-10 flex flex-col justify-center space-y-2 h-32">
                 <p class="text-3xl font-bold"  id="monthYear">Mai 2024</p>
                 <p class="text-slate-400" id="fullDate">Jeudi,16 Mai, 2024</p>
             </div>
@@ -71,9 +74,9 @@
             <p class="mr-10 text-lg font-medium text-blue-700">More detail<i class="bi bi-arrow-up-right underline"></i></p>
         </div>
         <!-- Detail card -->
-        <div class="flex flex-row flex-wrap w-full h-2/6 justify-evenly mt-5  px-10">
+        <div class="flex flex-row flex-wrap w-full  justify-evenly mt-5  px-10">
             <!-- Wind Speed -->
-            <div class="bg-slate-200 w-4/12 mr-3 bg-opacity-40 flex flex-row">
+            <div class="bg-slate-200 w-4/12 mr-3 bg-opacity-40 flex flex-row h-32">
                 <!-- Wind icon -->
                 <div class="h-full w-3/12  flex justify-center items-center">
                     <i class="bi bi-wind text-3xl text-indigo-700 font-bold"></i>
@@ -99,7 +102,7 @@
                 </div>
             </div>
             <!-- Pressure -->
-            <div class="bg-slate-200 w-4/12 mt-2 mr-3 bg-opacity-40 flex flex-row">
+            <div class="bg-slate-200 w-4/12 mt-2 mr-3 bg-opacity-40 flex flex-row h-32">
                 <!-- Pressure icon -->
                 <div class="h-full w-3/12  flex justify-center items-center">
                     <i class="bi bi-water text-3xl text-indigo-700 font-bold"></i>
@@ -126,6 +129,14 @@
             </div>
 
         </div>
+        <div class="flex flex-row justify-between pt-10 w-full my-5">
+            <p class="ml-10 text-2xl font-semibold">Average Hourly Temperature</p>
+            <p class="mr-10 text-lg font-medium text-blue-700">More detail<i class="bi bi-arrow-up-right underline"></i></p>
+        </div>
+        <div class="w-full  flex justify-center items-center px-10 my-5">
+           <canvas id="myChart" class="w-5/12  " ></canvas> 
+        </div>
+        
 
        </div>
        <!-- Right part -->

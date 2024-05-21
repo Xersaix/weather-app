@@ -1,3 +1,5 @@
+
+
 // Search bar in the middle part
 var searchBar = document.getElementById("searchBar");
 var searchBarDropdown = document.getElementById("searchBarDropdown");
@@ -76,8 +78,34 @@ async function getWheater(lat,lon)
 async function get5DayWeather(lat,lon)
 {
     
-    let response = await fetch('api.openweathermap.org/data/2.5/forecast?lat=44.34&lon=10.99&appid=72696e39e9f46234f7f02c9d446c41c4');
+    let response = await fetch("https://api.open-meteo.com/v1/forecast?latitude="+lat+"&longitude="+lon+"&hourly=temperature_2m");
     const data = await response.json();
+
+    let xValues = [];
+
+    for (let index = 0; index != 24; index++) {
+        xValues.push(index +"H")
+    }
+
+
+
+let myChart = new Chart("myChart", {
+  type: "line",
+  data: {
+    labels: xValues,
+    datasets: [{
+      data: data.hourly.temperature_2m,
+      borderColor: "blue",
+      fill: true ,
+      pointRadius: 1,
+      
+    }]
+  },
+  options: {
+    legend: {display: false},
+    
+  }
+});
 
     console.log(data);
 
@@ -152,3 +180,4 @@ searchBar.addEventListener("input",(event) =>{
 })
 
 get5DayWeather(defaultLat,defaultLon)
+
