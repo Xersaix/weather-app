@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="style.css">
     <script
 src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js">
-</script>
+    </script>
 <script src="https://unpkg.com/javascript-time-ago@[version]/bundle/javascript-time-ago.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <title>Document</title>
@@ -17,208 +17,223 @@ src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js">
     <div class="flex flex-row bg-gray w-screen h-screen">
 
         <!-- Left Part -->
-       <div class="flex flex-col w-2/12 h-full   bg-slate-200 ">
-        <!-- Logo and Title -->
-        <div class="flex flex-row h-1/6   items-center">
+        <div class="flex flex-col w-2/12 h-full   bg-slate-200 ">
+            <!-- Logo and Title -->
+            <div class="flex flex-row h-1/6   items-center">
             <p class="text-2xl text-blue-600 font-bold ml-7"> <i class="bi bi-stripe text-3xl mr-4 align-bottom"></i>Srawana</p>
-        </div>
-
-        <!-- Menu -->
-        <ul class="w-full  h-3/6 flex flex-col px-7 text-lg font-medium text-gray-600 space-y-10 pt-10 align-middle font-mono ">
-            <li class="hover:text-indigo-700"><i class="bi bi-house text-3xl mr-3 "></i>Dashboard</li>
-            <li class=""><i class="bi bi-map text-3xl mr-3"></i>Map</li>
-            <li class=""><i class="bi bi-pin-map text-3xl mr-3"></i>Saved location</li>
-
-        </ul>
-
-       </div>
-       <!-- Middle Part -->
-       <div class="flex flex-col w-7/12 sd:w-9/12 overflow-y-auto bg-slate-100">
-        <!-- Top containing date and search bar -->
-        <div class="flex flex-row h-72 justify-between border-b-2" style="height: 200px;">
-
-            <!-- Date -->
-            <div class=" w-4/12 pl-10 flex flex-col justify-center space-y-2 h-32">
-                <p class="text-3xl font-bold"  id="monthYear">Mai 2024</p>
-                <p class="text-slate-400" id="fullDate">Jeudi,16 Mai, 2024</p>
             </div>
 
-            <!-- Search Bar -->
-            <div class="flex flex-col w-7/12  items-center justify-center">
+            <!-- Menu -->
+        <ul class="w-full  h-3/6 flex flex-col px-7 text-lg font-medium text-gray-600 space-y-10 pt-10 align-middle ">
+                <li class="hover:text-indigo-700 text-indigo-800"><i class="bi bi-house text-2xl mr-3 "></i>Dashboard</li>
+                <li class=""><i class="bi bi-map text-2xl mr-3"></i>Map</li>
+                <li class="" id="saved"><i class="bi bi-pin-map text-2xl mr-3"></i>Saved location
+                <!-- Saved location modal -->
+                <div class=" w-full h-full flex absolute top-0 left-0 z-20 bg-opacity-75 backdrop-filter  backdrop-blur-sm  justify-center items-center hidden" id="saved-modal" >
+                    <!-- Saved modal Container -->
+                    <div class="backdrop-filter rounded-md flex flex-col backdrop-blur-xl w-6/12 h-1/6 bg-slate-200 p-5">
+                        <p class="text-2xl">Saved location</p>
+                        <hr class="mb-5 bg-slate-400">
 
-                <!-- search container -->
-                <div class="h-1/4 w-full relative rounded-md bg-slate-200 flex flex-row items-center  bg-opacity-40">
-                    <i class="bi bi-search ml-3"></i>
-                    <input type="text" id="searchBar"  class=" relative rounded-md pl-2 w-full h-full outline-none bg-inherit bg-opacity-40" placeholder="Search location here">
-                    <div id="searchBarDropdown" class="w-full hidden h-full absolute mt-9 rounded-b-sm top-0 origin-center border-t-3 shadow-sm  bg-slate-200 z-10" >
-                        <ul class="my-2">
-
-                        </ul>
+                        <div>
+                            <ul>
+                                <li class="flex justify-between"><p class="bg-slate-300 p-2 rounded-md">Les andelys, Normandy, Fr</p><i class="bi bi-trash"></i></li>
+                            </ul>
+                        </div>
                     </div>
                 </div>
-                
-                
-            </div>
+                </li>
 
-            <div class=" w-5/12 flex flex-row items-center justify-center space-x-10">
-                <span class="bg-slate-200 rounded-md text-center bg-opacity-40">
-                   <p class="m-4 text-slate-500"> <i class="bi bi-bell text-2xl "></i></p>
-                </span>
-                <span class="bg-slate-200 rounded-md text-center bg-opacity-40">
-                    <p class="m-3 text-slate-500"> <i class="bi bi-person text-3xl "></i></p>
-                 </span>
+            </ul>
+
+        </div>
+        <!-- Middle Part -->
+        <div class="flex flex-col w-7/12 sd:w-9/12 overflow-y-auto bg-slate-100">
+            <!-- Top containing date and search bar -->
+            <div class="flex flex-row h-72 justify-between border-b-2" style="height: 200px;">
+
+                <!-- Date -->
+                <div class=" w-4/12 pl-10 flex flex-col justify-center space-y-2 h-32">
+                <p class="text-3xl font-bold"  id="monthYear">Mai 2024</p>
+                    <p class="text-slate-400" id="fullDate">Jeudi,16 Mai, 2024</p>
+                </div>
+
+                <!-- Search Bar -->
+                <div class="flex flex-col w-7/12  items-center justify-center">
+
+                    <!-- search container -->
+                <div class="h-1/4 w-full relative rounded-md bg-slate-200 flex flex-row items-center  bg-opacity-40">
+                        <i class="bi bi-search ml-3"></i>
+                    <input type="text" id="searchBar"  class=" relative rounded-md pl-2 w-full h-full outline-none bg-inherit bg-opacity-40" placeholder="Search location here">
+                    <div id="searchBarDropdown" class="w-full hidden h-full absolute mt-9 rounded-b-sm top-0 origin-center border-t-3 shadow-sm  bg-slate-200 z-10" >
+                            <ul class="my-2">
+
+                            </ul>
+                        </div>
+                    </div>
+
+
+                </div>
+
+                <div class=" w-5/12 flex flex-row items-center justify-center space-x-10">
+                    <span class="bg-slate-200 rounded-md text-center bg-opacity-40">
+                        <p class="m-4 text-slate-500"> <i class="bi bi-bell text-2xl "></i></p>
+                    </span>
+                    <span class="bg-slate-200 rounded-md text-center bg-opacity-40">
+                        <p class="m-3 text-slate-500"> <i class="bi bi-person text-3xl "></i></p>
+                    </span>
+                </div>
             </div>
-        </div>
-        <!-- Today overview -->
-        <div class="flex flex-row justify-between pt-10 w-full">
-            <p class="ml-10 text-2xl font-semibold">Today overview</p>
+            <!-- Today overview -->
+            <div class="flex flex-row justify-between pt-10 w-full">
+                <p class="ml-10 text-2xl font-semibold">Today overview</p>
             <p class="mr-10 text-lg font-medium text-blue-700">More detail<i class="bi bi-arrow-up-right underline"></i></p>
-        </div>
-        <!-- Detail card -->
+            </div>
+            <!-- Detail card -->
         <div class="flex flex-row flex-wrap w-full  justify-evenly items-stretch mt-5  px-10">
-            <!-- Wind Speed -->
+                <!-- Wind Speed -->
             <div class="bg-slate-200 w-5/12 mr-3 bg-opacity-40 flex flex-row h-32">
-                <!-- Wind icon -->
-                <div class="h-full w-3/12  flex justify-center items-center">
-                    <i class="bi bi-wind text-3xl text-indigo-700 font-bold"></i>
-                </div>
+                    <!-- Wind icon -->
+                    <div class="h-full w-3/12  flex justify-center items-center">
+                        <i class="bi bi-wind text-3xl text-indigo-700 font-bold"></i>
+                    </div>
 
-                <div class="h-full w-6/12 flex flex-col justify-center space-y-3">
-                    <p class="text-lg font-medium text-slate-400">Wind Speed</p>
-                    <p id="wind" class="text-3xl font-bold">12km/h</p>
+                    <div class="h-full w-6/12 flex flex-col justify-center space-y-3">
+                        <p class="text-lg font-medium text-slate-400">Wind Speed</p>
+                        <p id="wind" class="text-3xl font-bold">12km/h</p>
 
+                    </div>
                 </div>
-            </div>
-            <!-- humidity -->
+                <!-- humidity -->
             <div class="bg-slate-200 w-5/12 bg-opacity-40 flex flex-row">
-                <!-- Humidity icon -->
-                <div class="h-full w-3/12  flex justify-center items-center">
-                    <i class="bi bi-moisture text-3xl text-indigo-700 font-bold"></i>
-                </div>
+                    <!-- Humidity icon -->
+                    <div class="h-full w-3/12  flex justify-center items-center">
+                        <i class="bi bi-moisture text-3xl text-indigo-700 font-bold"></i>
+                    </div>
 
-                <div class="h-full w-6/12 flex flex-col justify-center space-y-3">
-                    <p class="text-lg font-medium text-slate-400">Humidity</p>
-                    <p id="moist" class="text-3xl font-bold">55%</p>
+                    <div class="h-full w-6/12 flex flex-col justify-center space-y-3">
+                        <p class="text-lg font-medium text-slate-400">Humidity</p>
+                        <p id="moist" class="text-3xl font-bold">55%</p>
 
+                    </div>
                 </div>
-            </div>
-            <!-- Pressure -->
+                <!-- Pressure -->
             <div class="bg-slate-200 w-5/12 mt-2 mr-3 bg-opacity-40 flex flex-row h-32">
-                <!-- Pressure icon -->
-                <div class="h-full w-3/12  flex justify-center items-center">
-                    <i class="bi bi-water text-3xl text-indigo-700 font-bold"></i>
-                </div>
+                    <!-- Pressure icon -->
+                    <div class="h-full w-3/12  flex justify-center items-center">
+                        <i class="bi bi-water text-3xl text-indigo-700 font-bold"></i>
+                    </div>
 
-                <div class="h-full w-6/12 flex flex-col justify-center space-y-3">
-                    <p class="text-lg font-medium text-slate-400">Pressure</p>
-                    <p id="pressure" class="text-3xl font-bold">720 hpa</p>
+                    <div class="h-full w-6/12 flex flex-col justify-center space-y-3">
+                        <p class="text-lg font-medium text-slate-400">Pressure</p>
+                        <p id="pressure" class="text-3xl font-bold">720 hpa</p>
 
+                    </div>
                 </div>
-            </div>
-            <!-- Uv Index -->
+                <!-- Uv Index -->
             <div class="bg-slate-200 w-5/12  mt-2 bg-opacity-40 flex flex-row">
-                <!-- Humidity icon -->
-                <div class="h-full w-3/12  flex justify-center items-center">
-                    <i class="bi bi-cloud text-3xl text-indigo-700 font-bold"></i>
+                    <!-- Humidity icon -->
+                    <div class="h-full w-3/12  flex justify-center items-center">
+                        <i class="bi bi-cloud text-3xl text-indigo-700 font-bold"></i>
+                    </div>
+
+                    <div class="h-full w-6/12 flex flex-col justify-center space-y-3">
+                        <p class="text-lg font-medium text-slate-400">Cloudiness</p>
+                        <p id="cloud" class="text-3xl font-bold">2,3</p>
+
+                    </div>
                 </div>
 
-                <div class="h-full w-6/12 flex flex-col justify-center space-y-3">
-                    <p class="text-lg font-medium text-slate-400">Cloudiness</p>
-                    <p id="cloud" class="text-3xl font-bold">2,3</p>
-
-                </div>
             </div>
-
-        </div>
-        <div class="flex flex-row justify-between pt-10 w-full my-5">
-            <p class="ml-10 text-2xl font-semibold">Average Hourly Temperature</p>
+            <div class="flex flex-row justify-between pt-10 w-full my-5">
+                <p class="ml-10 text-2xl font-semibold">Average Hourly Temperature</p>
             <p class="mr-10 text-lg font-medium text-blue-700">More detail<i class="bi bi-arrow-up-right underline"></i></p>
-        </div>
-        <div class="w-full  flex justify-center items-center px-10 my-5">
+            </div>
+            <div class="w-full  flex justify-center items-center px-10 my-5">
            <canvas id="myChart" class="w-5/12  " ></canvas> 
-        </div>
-        
+            </div>
 
-       </div>
-       <!-- Right part -->
-       <div class="flex flex-col w-3/12 bg-gradient-to-tl from-blue-800 via-blue-900 to-cyan-900">
-        <!-- Time and place -->
-        <div class="h-1/6 w-full flex flex-row">
-            <!-- Place -->
-            <div class="w-8/12 h-full  border-3 flex flex-col justify-center pl-10 text-left">
-                <p id="city" class="text-3xl font-semibold text-white">Marseille</p>
-                <p id="stateAndCountry" class="text-lg text-slate-300">Ile-de-France , FR</p>
-            </div>
-            <!-- Time -->
-            <div class="w-4/12 h-full flex justify-center items-center">
-                <p id="time" class="text-2xl text-white font-semibold">08:54</p>
-            </div>
+
         </div>
-        <!-- Wheather Icon -->
-        <div id="W-icon" class=" w-full mt-5 flex items-center text-slate-400">
-        </div>
-        <!-- Temperature -->
-        <div class="flex flex-row X w-full mb-10  items-stretch">
-            <div class="w-7/12 flex items-center justify-center ">
+        <!-- Right part -->
+        <div class="flex flex-col w-3/12 bg-gradient-to-tl from-blue-800 via-blue-900 to-cyan-900">
+            <!-- Time and place -->
+        <div class="h-32 w-full flex flex-row">
+                <!-- Place -->
+                <div class="w-8/12 h-full  border-3 flex flex-col justify-center pl-10 text-left">
+                    <p id="city" class="text-3xl font-semibold text-white">Marseille</p>
+                    <p id="stateAndCountry" class="text-lg text-slate-300">Ile-de-France , FR</p>
+                </div>
+                <!-- Time -->
+                <div class="w-4/12 h-full flex justify-center items-center">
+                    <p id="time" class="text-2xl text-white font-semibold">08:54</p>
+                </div>
+            </div>
+            <!-- Wheather Icon -->
+            <div id="W-icon" class=" w-full mt-5 flex items-center text-slate-400">
+            </div>
+            <!-- Temperature -->
+            <div class="flex flex-row X w-full mb-10  items-stretch">
+                <div class="w-7/12 flex items-center justify-center ">
 
                 <p class="text-7xl text-white" id="current-temp">20°C</p> 
-            </div>
-            <!--Weather description  -->
-            <div class=" w-5/12 h-full flex items-center justify-center">
-                <p class="text-xl text-white " id="weather">Couvert</p>
-            </div>
-            
-        </div>
-        <hr class="mx-10 border-1 bg-gray-200">
-        <!-- Sunset and sunrise title -->
-        <div class=" w-full  my-5 flex flex-row px-10 justify-between items-center">
-            <p class="text-xl font-semibold text-white">Sunset & Sunrise</p>
-            <p class="text-medium text-white">Normandy</p>
-        </div>
-
-        <!-- Sunset and sunrise card -->
-        <div class="w-full h-2/6 border-5 flex flex-col items-center space-y-5">
-            <!-- Sunrise card -->
-            <div class="w-10/12 h-3/6 bg-blue-950 bg-opacity-40 mt-5 rounded-lg flex flex-row">
-                <!-- Icon -->
-                <div class="w-4/12 h-full flex justify-center items-center">
-                    <i class="bi bi-sunrise-fill text-white text-5xl"></i>
                 </div>
-                <!-- Title and time -->
-                <div class="flex flex-col w-4/12 h-full text-white justify-center">
-                    <p class="text-medium">Sunrise</p>
+                <!--Weather description  -->
+                <div class=" w-5/12 h-full flex items-center justify-center">
+                <p class="text-xl text-white " id="weather">Couvert</p>
+                </div>
+
+            </div>
+            <hr class="mx-10 border-1 bg-gray-200">
+            <!-- Sunset and sunrise title -->
+            <div class=" w-full  my-5 flex flex-row px-10 justify-between items-center">
+                <p class="text-xl font-semibold text-white">Sunset & Sunrise</p>
+                <p class="text-medium text-white">Normandy</p>
+            </div>
+
+            <!-- Sunset and sunrise card -->
+            <div class="w-full  border-5 flex flex-col items-center space-y-5">
+                <!-- Sunrise card -->
+                <div class="w-10/12 h-3/6 bg-blue-950 bg-opacity-40 mt-5 rounded-lg flex flex-row">
+                    <!-- Icon -->
+                    <div class="w-4/12 h-full flex justify-center items-center">
+                        <i class="bi bi-sunrise-fill text-white text-5xl"></i>
+                    </div>
+                    <!-- Title and time -->
+                    <div class="flex flex-col w-4/12 h-32 text-white justify-center">
+                        <p class="text-medium">Sunrise</p>
                     <p class="text-2xl" id="sunrise">4:20 AM</p>
 
-                </div>
-                <!-- Hour ago -->
-                <div class="w-4/12 h-full flex justify-center items-center text-white">
+                    </div>
+                    <!-- Hour ago -->
+                    <div class="w-4/12 h-full flex justify-center items-center text-white">
 
-                    <p>4 hours ago</p>
+                        <p>4 hours ago</p>
+                    </div>
                 </div>
-            </div>
-            <!-- Sunset card -->
-            <div class="w-10/12 h-3/6 bg-blue-950 bg-opacity-40 mt-5 rounded-lg flex flex-row">
-                <!-- Icon -->
-                <div class="w-4/12 h-full flex justify-center items-center">
-                    <i class="bi bi-sunset-fill text-white text-5xl"></i>
-                </div>
-                <!-- Title and time -->
-                <div class="flex flex-col w-4/12 h-full text-white justify-center">
-                    <p class="text-medium">Sunset</p>
+                <!-- Sunset card -->
+                <div class="w-10/12 h-3/6 bg-blue-950 bg-opacity-40 mt-5 rounded-lg flex flex-row">
+                    <!-- Icon -->
+                    <div class="w-4/12 h-full flex justify-center items-center">
+                        <i class="bi bi-sunset-fill text-white text-5xl"></i>
+                    </div>
+                    <!-- Title and time -->
+                    <div class="flex flex-col w-4/12 h-32 text-white justify-center">
+                        <p class="text-medium">Sunset</p>
                     <p class="text-2xl" id="sunset">4:20 AM</p>
 
-                </div>
-                <!-- Hour ago -->
-                <div class="w-4/12 h-full flex justify-center items-center text-white">
+                    </div>
+                    <!-- Hour ago -->
+                    <div class="w-4/12 h-full flex justify-center items-center text-white">
 
-                    <p>4 hours ago</p>
+                        <p>4 hours ago</p>
+                    </div>
                 </div>
+
             </div>
-
         </div>
-       </div>
     </div>
- 
+
 </body>
 </html>
 <script src="weather.js"></script>

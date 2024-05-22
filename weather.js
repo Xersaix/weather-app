@@ -24,52 +24,53 @@ var weatherType = document.getElementById("weather")
 var sunset = document.getElementById("sunset")
 var sunrise = document.getElementById("sunrise")
 var W_icon = document.getElementById("W-icon");
+var saved = document.getElementById("saved");
+var savedModal = document.getElementById("saved-modal");
 
-var weatherList= {"Thunderstorm" : "bi bi-cloud-lightning-fill",
-        "Drizzle" : "bi bi-cloud-drizzle-fill",
-        "Rain":"bi bi-cloud-rain-fill",
-        "Snow":"bi bi-cloud-snow-fill",
-        "Atmosphere":"bi bi-cloud-fog2-fill",
-        "Clear":"bi bi-sun-fill",
-        "Clouds":"bi bi-cloud-fill"
-    }
-
-
-
-
-
-function showDate(){
-// Format the the first date 
-let date1 = new Date();
-let monthYear = date1.toLocaleString('fr-FR',{
-    month: 'long',
-    year: 'numeric',
-    
-});
-monthYear = monthYear[0].toUpperCase() + monthYear.slice(1)
-monthAndYear.innerText= monthYear
-// Format the second Date
-let date2 = new Date();
-let fullDate = date2.toLocaleString('fr-FR',{
-    day: 'numeric',
-    weekday: 'long',
-    month: 'long',
-    year: 'numeric',
-
-    
-});
-
-full_date.innerText = fullDate
+var weatherList = {
+    "Thunderstorm": "bi bi-cloud-lightning-fill",
+    "Drizzle": "bi bi-cloud-drizzle-fill",
+    "Rain": "bi bi-cloud-rain-fill",
+    "Snow": "bi bi-cloud-snow-fill",
+    "Atmosphere": "bi bi-cloud-fog2-fill",
+    "Clear": "bi bi-sun-fill",
+    "Clouds": "bi bi-cloud-fill"
 }
 
-async function getWheater(lat,lon)
-{
-    let apiUrl ="https://api.openweathermap.org/data/2.5/weather?lat="+lat+"&lon="+lon+"&appid=72696e39e9f46234f7f02c9d446c41c4&units=metric&lang=fr"
+
+
+
+
+function showDate() {
+    // Format the the first date 
+    let date1 = new Date();
+    let monthYear = date1.toLocaleString('fr-FR', {
+        month: 'long',
+        year: 'numeric',
+
+    });
+    monthYear = monthYear[0].toUpperCase() + monthYear.slice(1)
+    monthAndYear.innerText = monthYear
+    // Format the second Date
+    let date2 = new Date();
+    let fullDate = date2.toLocaleString('fr-FR', {
+        day: 'numeric',
+        weekday: 'long',
+        month: 'long',
+        year: 'numeric',
+
+
+    });
+
+    full_date.innerText = fullDate;
+}
+
+async function getWheater(lat, lon) {
+    let apiUrl = "https://api.openweathermap.org/data/2.5/weather?lat=" + lat + "&lon=" + lon + "&appid=72696e39e9f46234f7f02c9d446c41c4&units=metric&lang=fr"
     const response = await fetch(apiUrl);
     const data = await response.json();
 
-    if(data.length != 0)
-    {
+    if (data.length != 0) {
         wind.innerText = data.wind.speed + "km/h";
         moist.innerText = data.main.humidity + "%";
         pressure.innerText = data.main.pressure + " hpa";
@@ -77,118 +78,157 @@ async function getWheater(lat,lon)
         W_icon.innerHTML = `<i class="${weatherList[data.weather[0].main]}  text-5xl ml-10 pl-5 "></i>`
         currentTemp.innerText = Math.round(data.main.temp) + "°"
         weatherType.innerText = data.weather[0].description
-        sunset.innerText = new Date(data.sys.sunset *1000).getHours() + ':'+ new Date(data.sys.sunset *1000).getMinutes()
-        sunrise.innerText = new Date(data.sys.sunrise*1000).getHours() + ':'+ new Date(data.sys.sunrise*1000).getMinutes()
+        sunset.innerText = new Date(data.sys.sunset * 1000).getHours() + ':' + new Date(data.sys.sunset * 1000).getMinutes()
+        sunrise.innerText = new Date(data.sys.sunrise * 1000).getHours() + ':' + new Date(data.sys.sunrise * 1000).getMinutes()
         console.log(data.weather[0].main)
-        
+
 
     }
     return await data;
 }
 
-async function get5DayWeather(lat,lon)
-{
-    
-    let response = await fetch("https://api.open-meteo.com/v1/forecast?latitude="+lat+"&longitude="+lon+"&hourly=temperature_2m");
+async function get5DayWeather(lat, lon) {
+
+    let response = await fetch("https://api.open-meteo.com/v1/forecast?latitude=" + lat + "&longitude=" + lon + "&hourly=temperature_2m");
     const data = await response.json();
 
     let xValues = [];
 
     for (let index = 0; index != 24; index++) {
-        xValues.push(index +"H")
+        xValues.push(index + "H")
     }
 
 
 
-let myChart = new Chart("myChart", {
-  type: "line",
-  data: {
-    labels: xValues,
-    datasets: [{
-      data: data.hourly.temperature_2m,
-      borderColor: "blue",
-      fill: true ,
-      pointRadius: 1,
-      
-    }]
-  },
-  options: {
-    legend: {display: false},
-    
-  }
-});
+    let myChart = new Chart("myChart", {
+        type: "line",
+        data: {
+            labels: xValues,
+            datasets: [{
+                data: data.hourly.temperature_2m,
+                borderColor: "blue",
+                fill: true,
+                pointRadius: 1,
+
+            }]
+        },
+        options: {
+            legend: { display: false },
+
+        }
+    });
 
     console.log(data);
 
 }
 
-async function nameToCoordinate(name)
-{
-    const response = await fetch("http://api.openweathermap.org/geo/1.0/direct?q="+name+"&limit=5&appid=72696e39e9f46234f7f02c9d446c41c4");
+async function nameToCoordinate(name) {
+    const response = await fetch("http://api.openweathermap.org/geo/1.0/direct?q=" + name + "&limit=5&appid=72696e39e9f46234f7f02c9d446c41c4");
     const data = await response.json();
-     return await data;
+    return await data;
 }
 
-async function loadRightName(name){
-    nameToCoordinate(name).then((result2)=>{
+async function loadRightName(name) {
+    nameToCoordinate(name).then((result2) => {
         city.innerText = result2[0].name;
-        stateAndCountry.innerText = result2[0].state + ", "+ result2[0].country;
-        let currentTime = new Date().toLocaleTimeString(undefined,{
+        stateAndCountry.innerText = result2[0].state + ", " + result2[0].country;
+        let currentTime = new Date().toLocaleTimeString(undefined, {
             hour: '2-digit',
-            minute: '2-digit',});
+            minute: '2-digit',
+        });
 
         time.innerText = currentTime;
-        
+
 
     })
 
 }
 
-window.onload = function(){
+window.onload = function () {
     showDate()
-    
-    getWheater(defaultLat,defaultLon).then((result)=>{
+
+    getWheater(defaultLat, defaultLon).then((result) => {
         loadRightName(result.name)
-        
+        get5DayWeather(defaultLat, defaultLon)
+
         console.log(result)
     })
 }
 
-searchBar.addEventListener("input",(event) =>{
+function loadSearch(lat,lon)
+{
+    showDate()
 
-    if(searchBar.value.length != 0)
+    getWheater(lat, lon).then((result) => {
+        loadRightName(result.name)
+        get5DayWeather(lat, lon)
+        searchBarDropdown.classList.replace("visible", "hidden")
+
+        console.log(result)
+    })
+}
+
+function addDelFav(name,lat,lon)
+{
+    if(typeof localStorage.getItem(name) !== 'undefined' && localStorage.getItem(name) == lat + " "+ lon )
     {
-        searchBarDropdown.classList.replace("hidden","visible")
-        if(searchBar.value.length >= 3)
-        {
-            nameToCoordinate(searchBar.value).then((result) =>{
-
-            searchBarDropdown.childNodes[1].innerHTML = ""
-            if(result.length != 0)
-            {
-                result.forEach(element => {
-                    searchBarDropdown.childNodes[1].innerHTML += `
-                    <li class="w-full bg-slate-200 hover:bg-slate-300 pl-8">${element.name}, ${element.state}, ${element.country}</li>
-                    `
-                });
-            }
-            else
-            {
-                searchBarDropdown.childNodes[1].innerHTML += `<li class="w-full bg-slate-200 hover:bg-slate-300 pl-8">Aucun résultat</li>`
-            }
-
-            console.log(result)
-            console.log(searchBarDropdown.childNodes)
-
-        })}
+        localStorage.removeItem(name)
     }
-    else
-    {
-        searchBarDropdown.classList.replace("visible","hidden")
+    else {
+        let coord = lat + " "+ lon
+        localStorage.setItem(name,coord);
+    }
+
+console.log(localStorage.getItem(name))
+searchBarDropdown.classList.replace("visible", "hidden")
+}
+
+
+searchBar.addEventListener("input", (event) => {
+
+    if (searchBar.value.length != 0) {
+        searchBarDropdown.classList.replace("hidden", "visible")
+        if (searchBar.value.length >= 3) {
+            nameToCoordinate(searchBar.value).then((result) => {
+
+                searchBarDropdown.childNodes[1].innerHTML = ""
+                if (result.length != 0) {
+                    result.forEach(element => {
+                        let fav ='';
+                        if(typeof localStorage.getItem(`${element.name}, ${element.state}, ${element.country}`) !== 'undefined' && localStorage.getItem(`${element.name}, ${element.state}, ${element.country}`) == element.lat+ " " + element.lon )
+                        {
+                            fav = "bi bi-star-fill";
+                        }else{
+                            fav = "bi bi-star";
+                        }
+
+                        let name = element.name+", " +element.state+", "+element.country 
+                        let val = element.lat+ " " + element.lon
+                        searchBarDropdown.childNodes[1].innerHTML += `
+                    <li class="w-full bg-slate-200 hover:bg-slate-300 pl-8 flex justify-between" ><span onclick="loadSearch(${element.lat},${element.lon})">${element.name}, ${element.state}, ${element.country}</span> <i class="${fav} mr-3" onclick="addDelFav('${name}', ${element.lat},${element.lon})"></i></li>
+                    `
+                    });
+                }
+                else {
+                    searchBarDropdown.childNodes[1].innerHTML += `<li class="w-full bg-slate-200 hover:bg-slate-300 pl-8">Aucun résultat</li>`
+                }
+
+                console.log(result)
+                console.log(searchBarDropdown.childNodes)
+
+            })
+        }
+    }
+    else {
+        searchBarDropdown.classList.replace("visible", "hidden")
     }
 
 
 })
 
-get5DayWeather(defaultLat,defaultLon)
+saved.addEventListener("click",(event) => {
 
+   savedModal.classList.replace("hidden", "visible")
+
+
+})
