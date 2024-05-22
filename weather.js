@@ -12,14 +12,17 @@ var moist = document.getElementById("moist");
 var pressure = document.getElementById("pressure");
 var cloud = document.getElementById("cloud");
 // Default latitude and longitude
-var defaultLat = 49.2469193;
-var defaultLon = 1.4215534;
+var defaultLat = 44.34;
+var defaultLon = 10.99;
 // City , State,Country and Time
 var city = document.getElementById("city");
 var stateAndCountry = document.getElementById("stateAndCountry");
 var time = document.getElementById("time");
-
 // 
+var currentTemp = document.getElementById("current-temp")
+var weatherType = document.getElementById("weather")
+var sunset = document.getElementById("sunset")
+var sunrise = document.getElementById("sunrise")
 var W_icon = document.getElementById("W-icon");
 
 var weatherList= {"Thunderstorm" : "bi bi-cloud-lightning-fill",
@@ -30,6 +33,9 @@ var weatherList= {"Thunderstorm" : "bi bi-cloud-lightning-fill",
         "Clear":"bi bi-sun-fill",
         "Clouds":"bi bi-cloud-fill"
     }
+
+
+
 
 
 function showDate(){
@@ -69,7 +75,12 @@ async function getWheater(lat,lon)
         pressure.innerText = data.main.pressure + " hpa";
         cloud.innerText = data.clouds.all + "%";
         W_icon.innerHTML = `<i class="${weatherList[data.weather[0].main]}  text-5xl ml-10 pl-5 "></i>`
+        currentTemp.innerText = Math.round(data.main.temp) + "°"
+        weatherType.innerText = data.weather[0].description
+        sunset.innerText = new Date(data.sys.sunset *1000).getHours() + ':'+ new Date(data.sys.sunset *1000).getMinutes()
+        sunrise.innerText = new Date(data.sys.sunrise*1000).getHours() + ':'+ new Date(data.sys.sunrise*1000).getMinutes()
         console.log(data.weather[0].main)
+        
 
     }
     return await data;

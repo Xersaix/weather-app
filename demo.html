@@ -8,6 +8,7 @@
     <script
 src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js">
 </script>
+<script src="https://unpkg.com/javascript-time-ago@[version]/bundle/javascript-time-ago.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <title>Document</title>
 </head>
@@ -74,9 +75,9 @@ src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js">
             <p class="mr-10 text-lg font-medium text-blue-700">More detail<i class="bi bi-arrow-up-right underline"></i></p>
         </div>
         <!-- Detail card -->
-        <div class="flex flex-row flex-wrap w-full  justify-evenly mt-5  px-10">
+        <div class="flex flex-row flex-wrap w-full  justify-evenly items-stretch mt-5  px-10">
             <!-- Wind Speed -->
-            <div class="bg-slate-200 w-4/12 mr-3 bg-opacity-40 flex flex-row h-32">
+            <div class="bg-slate-200 w-5/12 mr-3 bg-opacity-40 flex flex-row h-32">
                 <!-- Wind icon -->
                 <div class="h-full w-3/12  flex justify-center items-center">
                     <i class="bi bi-wind text-3xl text-indigo-700 font-bold"></i>
@@ -89,7 +90,7 @@ src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js">
                 </div>
             </div>
             <!-- humidity -->
-            <div class="bg-slate-200 w-4/12 bg-opacity-40 flex flex-row">
+            <div class="bg-slate-200 w-5/12 bg-opacity-40 flex flex-row">
                 <!-- Humidity icon -->
                 <div class="h-full w-3/12  flex justify-center items-center">
                     <i class="bi bi-moisture text-3xl text-indigo-700 font-bold"></i>
@@ -102,7 +103,7 @@ src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js">
                 </div>
             </div>
             <!-- Pressure -->
-            <div class="bg-slate-200 w-4/12 mt-2 mr-3 bg-opacity-40 flex flex-row h-32">
+            <div class="bg-slate-200 w-5/12 mt-2 mr-3 bg-opacity-40 flex flex-row h-32">
                 <!-- Pressure icon -->
                 <div class="h-full w-3/12  flex justify-center items-center">
                     <i class="bi bi-water text-3xl text-indigo-700 font-bold"></i>
@@ -115,7 +116,7 @@ src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js">
                 </div>
             </div>
             <!-- Uv Index -->
-            <div class="bg-slate-200 w-4/12  mt-2 bg-opacity-40 flex flex-row">
+            <div class="bg-slate-200 w-5/12  mt-2 bg-opacity-40 flex flex-row">
                 <!-- Humidity icon -->
                 <div class="h-full w-3/12  flex justify-center items-center">
                     <i class="bi bi-cloud text-3xl text-indigo-700 font-bold"></i>
@@ -160,11 +161,11 @@ src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js">
         <div class="flex flex-row X w-full mb-10  items-stretch">
             <div class="w-7/12 flex items-center justify-center ">
 
-                <p class="text-7xl text-white" >20°C</p> 
+                <p class="text-7xl text-white" id="current-temp">20°C</p> 
             </div>
             <!--Weather description  -->
             <div class=" w-5/12 h-full flex items-center justify-center">
-                <p class="text-xl text-white ">Couvert</p>
+                <p class="text-xl text-white " id="weather">Couvert</p>
             </div>
             
         </div>
@@ -186,7 +187,7 @@ src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js">
                 <!-- Title and time -->
                 <div class="flex flex-col w-4/12 h-full text-white justify-center">
                     <p class="text-medium">Sunrise</p>
-                    <p class="text-2xl">4:20 AM</p>
+                    <p class="text-2xl" id="sunrise">4:20 AM</p>
 
                 </div>
                 <!-- Hour ago -->
@@ -204,7 +205,7 @@ src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js">
                 <!-- Title and time -->
                 <div class="flex flex-col w-4/12 h-full text-white justify-center">
                     <p class="text-medium">Sunset</p>
-                    <p class="text-2xl">4:20 AM</p>
+                    <p class="text-2xl" id="sunset">4:20 AM</p>
 
                 </div>
                 <!-- Hour ago -->

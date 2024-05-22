@@ -3,6 +3,8 @@
     "tailwindcss": "^3.4.3"
   },
   "dependencies": {
-    "chart.js": "^4.4.3"
+    "chart.js": "^4.4.3",
+    "javascript-time-ago": "^2.5.10",
+    "moment": "^2.30.1"
   }
 }
