@@ -27,20 +27,14 @@ src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js">
         <ul class="w-full  h-3/6 flex flex-col px-7 text-lg font-medium text-gray-600 space-y-10 pt-10 align-middle ">
                 <li class="hover:text-indigo-700 text-indigo-800"><i class="bi bi-house text-2xl mr-3 "></i>Dashboard</li>
                 <li class=""><i class="bi bi-map text-2xl mr-3"></i>Map</li>
-                <li class="" id="saved"><i class="bi bi-pin-map text-2xl mr-3"></i>Saved location
+                <li class="relative " id="saved"><i class="bi bi-pin-map text-2xl mr-3"></i>Saved location
                 <!-- Saved location modal -->
-                <div class=" w-full h-full flex absolute top-0 left-0 z-20 bg-opacity-75 backdrop-filter  backdrop-blur-sm  justify-center items-center hidden" id="saved-modal" >
+                <div class="absolute min-w-72 left-0  z-20 bg-red-500 hidden " id="saved-dropdown" >
                     <!-- Saved modal Container -->
-                    <div class="backdrop-filter rounded-md flex flex-col backdrop-blur-xl w-6/12 h-1/6 bg-slate-200 p-5">
-                        <p class="text-2xl">Saved location</p>
-                        <hr class="mb-5 bg-slate-400">
-
-                        <div>
-                            <ul>
-                                <li class="flex justify-between"><p class="bg-slate-300 p-2 rounded-md">Les andelys, Normandy, Fr</p><i class="bi bi-trash"></i></li>
+                            <ul class="w-full">
+                                <li class="flex justify-between bg-slate-300"><p class=" p-2 rounded-md">Les andelys, Normandy, Fr</p><i class="bi bi-trash"></i></li>
                             </ul>
-                        </div>
-                    </div>
+
                 </div>
                 </li>
 

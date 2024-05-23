@@ -25,7 +25,7 @@ var sunset = document.getElementById("sunset")
 var sunrise = document.getElementById("sunrise")
 var W_icon = document.getElementById("W-icon");
 var saved = document.getElementById("saved");
-var savedModal = document.getElementById("saved-modal");
+var savedDropdown = document.getElementById("saved-dropdown");
 
 var weatherList = {
     "Thunderstorm": "bi bi-cloud-lightning-fill",
@@ -228,7 +228,21 @@ searchBar.addEventListener("input", (event) => {
 
 saved.addEventListener("click",(event) => {
 
-   savedModal.classList.replace("hidden", "visible")
+    if(savedDropdown.classList.contains("hidden"))
+    {
+        savedDropdown.classList.replace("hidden", "visible") 
+    }
+
 
 
 })
+// When the user clicks anywhere outside of the modal, close it
+        // Close the dropdown if clicking outside of it
+        document.addEventListener('click', function(event) {
+            if (!saved.contains(event.target)) {
+                if(savedDropdown.classList.contains("visible"))
+                {
+                    savedDropdown.classList.replace("visible", "hidden")
+                }       
+            }
+        });
