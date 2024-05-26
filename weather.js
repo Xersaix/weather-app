@@ -25,7 +25,11 @@ var sunset = document.getElementById("sunset")
 var sunrise = document.getElementById("sunrise")
 var W_icon = document.getElementById("W-icon");
 var saved = document.getElementById("saved");
-var savedDropdown = document.getElementById("saved-dropdown");
+var saved_location = document.getElementById("saved-location")
+var dash = document.getElementById("dash")
+var dashboard = document.getElementById("dashboard")
+var map_link = document.getElementById("map-link")
+var map = document.getElementById("map-location")
 
 var weatherList = {
     "Thunderstorm": "bi bi-cloud-lightning-fill",
@@ -87,6 +91,51 @@ async function getWheater(lat, lon) {
     return await data;
 }
 
+function savedLocationClick(lat,lon) {
+    getWheater(lat, lon).then((result) => {
+        loadRightName(result.name)
+        get5DayWeather(lat, lon)
+
+        saved_location.classList.replace("visible", "hidden")
+        map.classList.replace("visible", "hidden")
+        dashboard.classList.replace("hidden", "visible")
+        if (saved.classList.contains("text-blue-600")) {
+            saved.classList.remove("text-blue-600")
+            dash.classList.add("text-blue-600")
+        } else if (map_link.classList.contains("text-blue-600")) {
+            map_link.classList.remove("text-blue-600")
+            dash.classList.add("text-blue-600")
+        }
+    })
+
+}
+
+function loadSavedLocation() {
+    saved_location.lastElementChild.innerHTML = ""
+    Object.keys(localStorage).forEach(function (key) {
+        
+
+        saved_location.lastElementChild.innerHTML += `
+        <div class="h-36 bg-slate-200 flex justify-center items-center">
+        <!-- Time and place -->
+        <div class="h-32 w-full flex flex-row">
+            <!-- Place -->
+            <div class="w-8/12 h-full  border-3 flex flex-col justify-center pl-10 text-left" onclick="savedLocationClick(${localStorage.getItem(key).split(" ")[0]},${localStorage.getItem(key).split(" ")[1]})">
+                <p class="text-3xl font-semibold text-black">${key.split(", ")[0]}</p>
+                <p class="text-lg text-slate-400">${key.split(", ")[1]},${key.split(", ")[2]} </p>
+            </div>
+            <!-- Time -->
+            <div class="w-4/12 h-full flex justify-center items-center">
+                
+                <i class="bi bi-trash text-2xl text-dark font-semibold"onclick="addDelFav('${key}',${localStorage.getItem(key).split(" ")[0]},${localStorage.getItem(key).split(" ")[1]})"></i>
+            </div>
+        </div>
+        
+        </div>
+        `
+    });
+}
+
 async function get5DayWeather(lat, lon) {
 
     let response = await fetch("https://api.open-meteo.com/v1/forecast?latitude=" + lat + "&longitude=" + lon + "&hourly=temperature_2m");
@@ -95,7 +144,7 @@ async function get5DayWeather(lat, lon) {
     let xValues = [];
 
     for (let index = 0; index != 24; index++) {
-        xValues.push(index + "H")
+        xValues.push(index + "h00")
     }
 
 
@@ -104,7 +153,9 @@ async function get5DayWeather(lat, lon) {
         type: "line",
         data: {
             labels: xValues,
+            label: 'Heure',
             datasets: [{
+                label: 'Temperature',
                 data: data.hourly.temperature_2m,
                 borderColor: "blue",
                 fill: true,
@@ -114,6 +165,7 @@ async function get5DayWeather(lat, lon) {
         },
         options: {
             legend: { display: false },
+            maintainAspectRatio: false,
 
         }
     });
@@ -147,40 +199,40 @@ async function loadRightName(name) {
 window.onload = function () {
     showDate()
 
-    getWheater(defaultLat, defaultLon).then((result) => {
-        loadRightName(result.name)
-        get5DayWeather(defaultLat, defaultLon)
+    // getWheater(defaultLat, defaultLon).then((result) => {
+    //     loadRightName(result.name)
+    //     get5DayWeather(defaultLat, defaultLon)
 
-        console.log(result)
-    })
+    //     console.log(result)
+    // })
 }
 
-function loadSearch(lat,lon)
-{
+
+
+function loadSearch(lat, lon) {
     showDate()
 
     getWheater(lat, lon).then((result) => {
         loadRightName(result.name)
         get5DayWeather(lat, lon)
         searchBarDropdown.classList.replace("visible", "hidden")
-
+        
         console.log(result)
     })
 }
 
-function addDelFav(name,lat,lon)
-{
-    if(typeof localStorage.getItem(name) !== 'undefined' && localStorage.getItem(name) == lat + " "+ lon )
-    {
+function addDelFav(name, lat, lon) {
+    if (typeof localStorage.getItem(name) !== 'undefined' && localStorage.getItem(name) == lat + " " + lon) {
         localStorage.removeItem(name)
     }
     else {
-        let coord = lat + " "+ lon
-        localStorage.setItem(name,coord);
+        let coord = lat + " " + lon
+        localStorage.setItem(name, coord);
     }
 
-console.log(localStorage.getItem(name))
-searchBarDropdown.classList.replace("visible", "hidden")
+    loadSavedLocation()
+    console.log(localStorage.getItem(name))
+    searchBarDropdown.classList.replace("visible", "hidden")
 }
 
 
@@ -194,16 +246,15 @@ searchBar.addEventListener("input", (event) => {
                 searchBarDropdown.childNodes[1].innerHTML = ""
                 if (result.length != 0) {
                     result.forEach(element => {
-                        let fav ='';
-                        if(typeof localStorage.getItem(`${element.name}, ${element.state}, ${element.country}`) !== 'undefined' && localStorage.getItem(`${element.name}, ${element.state}, ${element.country}`) == element.lat+ " " + element.lon )
-                        {
+                        let fav = '';
+                        if (typeof localStorage.getItem(`${element.name}, ${element.state}, ${element.country}`) !== 'undefined' && localStorage.getItem(`${element.name}, ${element.state}, ${element.country}`) == element.lat + " " + element.lon) {
                             fav = "bi bi-star-fill";
-                        }else{
+                        } else {
                             fav = "bi bi-star";
                         }
 
-                        let name = element.name+", " +element.state+", "+element.country 
-                        let val = element.lat+ " " + element.lon
+                        let name = element.name + ", " + element.state + ", " + element.country
+                        let val = element.lat + " " + element.lon
                         searchBarDropdown.childNodes[1].innerHTML += `
                     <li class="w-full bg-slate-200 hover:bg-slate-300 pl-8 flex justify-between" ><span onclick="loadSearch(${element.lat},${element.lon})">${element.name}, ${element.state}, ${element.country}</span> <i class="${fav} mr-3" onclick="addDelFav('${name}', ${element.lat},${element.lon})"></i></li>
                     `
@@ -226,23 +277,56 @@ searchBar.addEventListener("input", (event) => {
 
 })
 
-saved.addEventListener("click",(event) => {
+saved.addEventListener("click", (event) => {
 
-    if(savedDropdown.classList.contains("hidden"))
-    {
-        savedDropdown.classList.replace("hidden", "visible") 
+
+    dashboard.classList.replace("visible", "hidden")
+    map.classList.replace("visible", "hidden")
+    saved_location.classList.replace("hidden", "visible")
+    if (dash.classList.contains("text-blue-600")) {
+        dash.classList.remove("text-blue-600")
+        saved.classList.add("text-blue-600")
+    } else if (map_link.classList.contains("text-blue-600")) {
+        map_link.classList.remove("text-blue-600")
+        saved.classList.add("text-blue-600")
+    }
+    loadSavedLocation()
+
+})
+
+map_link.addEventListener("click", (event) => {
+
+    map.classList.replace("hidden", "visible")
+    dashboard.classList.replace("visible", "hidden")
+    saved_location.classList.replace("visible", "hidden")
+    if (dash.classList.contains("text-blue-600")) {
+        dash.classList.remove("text-blue-600")
+        map_link.classList.add("text-blue-600")
+    } else if (saved.classList.contains("text-blue-600")) {
+        saved.classList.remove("text-blue-600")
+        map_link.classList.add("text-blue-600")
+    }
+
+})
+
+dash.addEventListener("click", (event) => {
+
+
+    saved_location.classList.replace("visible", "hidden")
+    map.classList.replace("visible", "hidden")
+    dashboard.classList.replace("hidden", "visible")
+    if (saved.classList.contains("text-blue-600")) {
+        saved.classList.remove("text-blue-600")
+        dash.classList.add("text-blue-600")
+    } else if (map_link.classList.contains("text-blue-600")) {
+        map_link.classList.remove("text-blue-600")
+        dash.classList.add("text-blue-600")
     }
 
 
 
+
 })
-// When the user clicks anywhere outside of the modal, close it
-        // Close the dropdown if clicking outside of it
-        document.addEventListener('click', function(event) {
-            if (!saved.contains(event.target)) {
-                if(savedDropdown.classList.contains("visible"))
-                {
-                    savedDropdown.classList.replace("visible", "hidden")
-                }       
-            }
-        });
+
+
+
