@@ -30,6 +30,8 @@ var dash = document.getElementById("dash")
 var dashboard = document.getElementById("dashboard")
 var map_link = document.getElementById("map-link")
 var map = document.getElementById("map-location")
+var more = document.getElementById("more")
+var right = document.getElementById("right")
 
 var weatherList = {
     "Thunderstorm": "bi bi-cloud-lightning-fill",
@@ -148,6 +150,10 @@ async function get5DayWeather(lat, lon) {
     }
 
 
+    var ctx = document.getElementById('myChart').getContext("2d");
+    var gradientFill = ctx.createLinearGradient(0, 0,0,400);
+    gradientFill.addColorStop(0, "rgba(51, 51, 51, 0.7)");
+    gradientFill.addColorStop(1, "rgba(226, 232, 240, 0.1)");
 
     let myChart = new Chart("myChart", {
         type: "line",
@@ -160,6 +166,7 @@ async function get5DayWeather(lat, lon) {
                 borderColor: "blue",
                 fill: true,
                 pointRadius: 1,
+                backgroundColor: gradientFill,
 
             }]
         },
@@ -199,12 +206,12 @@ async function loadRightName(name) {
 window.onload = function () {
     showDate()
 
-    // getWheater(defaultLat, defaultLon).then((result) => {
-    //     loadRightName(result.name)
-    //     get5DayWeather(defaultLat, defaultLon)
+    getWheater(defaultLat, defaultLon).then((result) => {
+        loadRightName(result.name)
+        get5DayWeather(defaultLat, defaultLon)
 
-    //     console.log(result)
-    // })
+        console.log(result)
+    })
 }
 
 
@@ -329,4 +336,37 @@ dash.addEventListener("click", (event) => {
 })
 
 
+more.addEventListener("click",(event)=>{
 
+    if(right.classList.contains("hidden"))
+    {
+    right.classList.replace("hidden","visible")
+    right.classList.replace("relative","absolute")
+    right.classList.add("left-100")
+    more.firstChild.classList.replace("bi-arrow-left-circle","bi-arrow-right-circle")
+
+    }
+    else{
+        right.classList.replace("visible","hidden")
+        right.classList.replace("absolute","relative")
+        right.classList.remove("left-100")
+        more.firstChild.classList.replace("bi-arrow-right-circle","bi-arrow-left-circle")
+
+    }
+
+})
+
+
+  // Configure the click listener.
+map.addListener("click", (mapsMouseEvent) => {
+    // Close the current InfoWindow.
+    infoWindow.close();
+    // Create a new InfoWindow.
+    infoWindow = new google.maps.InfoWindow({
+    position: mapsMouseEvent.latLng,
+    });
+    infoWindow.setContent(
+    JSON.stringify(mapsMouseEvent.latLng.toJSON(), null, 2),
+    );
+    infoWindow.open(map);
+});
